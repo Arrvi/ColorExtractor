@@ -16,102 +16,55 @@ import eu.arrvi.cextr.statusbar.StatusBar;
 
 /**
  * Main window singleton of Color Extractor application. Has 4 panes and a status bar.<br>
+ * 
  * Panes:
- * <ul>
- * 	<li>WEST - preset tree
- * 	<li>CENTER - image preview
- * 	<li>EAST - algorithm parameters
- * 	<li>SOUTH - color table
- * </ul>
+ * <table border=1  style="text-align:center;">
+ * <tr>
+ *  <td colspan=3>Menu
+ * <tr>
+ * 	<td>WEST<br>preset tree
+ * 	<td>CENTER<br>image preview
+ * 	<td>EAST<br>algorithm parameters
+ * <tr>
+ * 	<td colspan=3>SOUTH<br>color table
+ * <tr>
+ *  <td colspan=3>StatusBar
+ * </table>
  * 
  * @author Kris
  */
-public final class MainWindow {
-	private final static double VERSION = 0.1; 
+public final class MainWindow extends JFrame {
 	
-	private static final MainWindow INSTANCE = new MainWindow();
-	private JFrame frame;
+	private final Controller controller;
 	private StatusBar status;
-	
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+	MainWindow(Controller contr) {
+		super("Color Extractor "+Main.VERSION);
 		
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				INSTANCE.init();
-			}
-		});
-	}
-	
-	/**
-	 * Returns readable version string.
-	 * 
-	 * @return version string
-	 */
-	public static String versionString() {
-		return "v."+VERSION;
-	}
-	
-	/**
-	 * Returns instance of MainWindow singleton
-	 * 
-	 * @return MainWindow singleton
-	 */
-	public static MainWindow getInstance() {
-		return INSTANCE;
-	}
-	
-	/**
-	 * Returns JFrame of main window. May be usable as dialog parent.
-	 * 
-	 * @return main window frame
-	 */
-	public static JFrame getJFrame() {
-		return INSTANCE.frame;
-	}
-	
-	/**
-	 * Returns StatusBar object for message modifications.<br>
-	 * Example:<br>
-	 * <code>MainWindow.getStatusBar().setStatus("Ready");</code>
-	 *
-	 * @return status bar object
-	 */
-	public static StatusBar getStatusBar() {
-		return INSTANCE.status;
-	}
-	
-	/**
-	 * Initiates main frame. Must be executed in EDT!
-	 */
-	private void init() {
-		frame = new JFrame("Color Extractor "+versionString());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setJMenuBar(new MenuBar());
-		frame.setLayout(new BorderLayout());
+		controller = contr;
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setJMenuBar(new MenuBar(contr));
+		this.setLayout(new BorderLayout());
 		
 		JPanel mainPane = new JPanel(new BorderLayout(10,10));
 		mainPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		mainPane.add(new ImageLoaderPane(), BorderLayout.CENTER);
-		mainPane.add(new ParametersPane(), BorderLayout.EAST);
-		mainPane.add(new ColorTablePane(), BorderLayout.SOUTH);
+		mainPane.add(new ImageLoaderPane(contr), BorderLayout.CENTER);
+		mainPane.add(new ParametersPane(contr), BorderLayout.EAST);
+		mainPane.add(new ColorTablePane(contr), BorderLayout.SOUTH);
 		
-		frame.add(mainPane, BorderLayout.CENTER);
+		this.add(mainPane, BorderLayout.CENTER);
 
 		status = new StatusBar();
-		frame.add(status, BorderLayout.SOUTH);
+		this.add(status, BorderLayout.SOUTH);
 		
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
-		status.setStatus("Ready");
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+
+	public Controller getController() {
+		return controller;
 	}
 }

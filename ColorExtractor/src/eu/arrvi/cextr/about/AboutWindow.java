@@ -19,6 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import eu.arrvi.cextr.Main;
 import eu.arrvi.cextr.MainWindow;
 
 /**
@@ -43,7 +44,7 @@ public class AboutWindow extends JDialog {
 		JLabel about = new JLabel(
 			"<html><body><center>"+
 			"<h1>Color Extractor</h1>"+
-			"<p><font color=gray>"+MainWindow.versionString()+"</font></p>"+
+			"<p><font color=gray>"+Main.VERSION+"</font></p>"+
 			"<p>by Kristian Kann</p>"+
 			"<p>Color Extractor analyses given image and extracts color samples from it.</p>"+
 			"<hr>"+

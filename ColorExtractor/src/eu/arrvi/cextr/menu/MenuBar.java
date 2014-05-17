@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import eu.arrvi.cextr.Controller;
 import eu.arrvi.cextr.MainWindow;
 import eu.arrvi.cextr.about.AboutWindow;
 
@@ -17,12 +18,15 @@ import eu.arrvi.cextr.about.AboutWindow;
  *
  */
 public class MenuBar extends JMenuBar {
+	private final Controller controller;
 	
 	/**
 	 * Creates menu bar with 3 menus - File, Edit, Help
 	 */
-	public MenuBar() {
+	public MenuBar(Controller contr) {
 		super();
+		
+		controller = contr;
 		
 		add(createFileMenu());
 		add(createEditMenu());
@@ -89,7 +93,7 @@ public class MenuBar extends JMenuBar {
 		about.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AboutWindow(MainWindow.getJFrame());
+				new AboutWindow(controller.getMainJFrame());
 			}
 		});
 		menu.add(about);

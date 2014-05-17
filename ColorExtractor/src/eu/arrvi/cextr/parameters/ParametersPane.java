@@ -8,9 +8,15 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 
+import eu.arrvi.cextr.Controller;
+
 public class ParametersPane extends JPanel {
-	public ParametersPane() {
+	private final Controller controller;
+	public ParametersPane(Controller contr) {
 		super();
+		
+		controller = contr;
+		
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Parameters"));
 		this.setPreferredSize(new Dimension(200, 0));

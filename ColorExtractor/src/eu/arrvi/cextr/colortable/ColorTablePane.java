@@ -13,15 +13,21 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import eu.arrvi.cextr.Controller;
+
 /**
  * @author Kris
  *
  */
 public class ColorTablePane extends JPanel {
+	private final Controller controller;
+	
 	private JTable table;
 	
-	public ColorTablePane() {
+	public ColorTablePane(Controller contr) {
 		super();
+		controller = contr;
+		
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Output"));
 		

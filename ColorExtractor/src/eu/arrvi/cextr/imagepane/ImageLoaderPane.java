@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 
+import eu.arrvi.cextr.Controller;
 import eu.arrvi.cextr.MainWindow;
 
 /**
@@ -32,6 +33,8 @@ import eu.arrvi.cextr.MainWindow;
  *
  */
 public final class ImageLoaderPane extends JPanel implements ActionListener {
+	private final Controller controller;
+	
 	private JFileChooser fc = new JFileChooser();
 	private File selectedFile;
 	private JButton loadImageButton;
@@ -42,8 +45,11 @@ public final class ImageLoaderPane extends JPanel implements ActionListener {
 	/**
 	 * Creates new ImageLoaderPane with default size of 600x400 and a button.
 	 */
-	public ImageLoaderPane() {
+	public ImageLoaderPane(Controller contr) {
 		super();
+		
+		controller = contr;
+		
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600,400));
 		setBorder(BorderFactory.createTitledBorder("Image"));
@@ -80,9 +86,6 @@ public final class ImageLoaderPane extends JPanel implements ActionListener {
 	private void displayImage() {
 		switchDisplayComponent(imagePane);
 		imagePane.setImage(image);
-		
-		MainWindow.getStatusBar().setStatus("Image loaded");
-		MainWindow.getStatusBar().setResolution(new Dimension(image.getWidth(), image.getHeight()));
 	}
 
 	private void switchDisplayComponent(Component comp) {
@@ -98,8 +101,6 @@ public final class ImageLoaderPane extends JPanel implements ActionListener {
 	 * @param fileToLoad File to load via ImageIO.read(). Must be image.
 	 */
 	public void loadImage(final File fileToLoad) {
-		MainWindow.getStatusBar().setStatus("Loading image...");
-		
 		final JLabel loadingLabel = new JLabel("Loading...");
 		loadingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
