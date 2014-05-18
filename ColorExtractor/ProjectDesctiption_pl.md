@@ -1,6 +1,6 @@
 # Color Extractor
 
-Aplikacja do tworzenia palet kolorystycznych na podstawie grafik rastrowych
+Aplikacja do tworzenia palet kolorystycznych na podstawie grafik rastrowych.
 
 ## Opis
 
