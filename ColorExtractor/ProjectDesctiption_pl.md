@@ -24,7 +24,7 @@ Dodatkowo, jeżeli czas pozwoli:
 - Wyłączanie obszarów zdjęcia z analizy
 - Edycja gotowych próbek kolorów w programie
 - Przedstawienie wyników na kole barw.
- 
+
 ## Algorytm (opis)
 
 1. Zmniejszenie rozdzielczości zdjęcia (ograniczenie czasu wykonania).
@@ -39,4 +39,4 @@ Aplikacja zostanie wykonana w języku Java z użyciem komponentów Swing. Interf
  
 ## Oryginalny pomysł
 
-Pod koniec 2010 roku na¬pisałem krótki skrypt PHP o nazwie kodowej ColorPalette realizujący podobne zadanie, ale z us¬ta¬lo¬ny¬mi pa¬ra¬me¬tra¬mi. Dodatkowo miał on pewne wady. Wyszukiwał on pla¬my wy¬łącz¬nie wierszami, czyli tra¬kto¬wał gra¬fikę o roz¬mia¬rach w × h jako h pasków w × 1. Mimo to produkował całkiem niezłe zestawienia.
+Pod koniec 2010 roku napisałem krótki skrypt PHP o nazwie kodowej ColorPalette realizujący podobne zadanie, ale z ustalonymi parametrami. Dodatkowo miał on pewne wady. Wyszukiwał on plamy wyłącznie wierszami, czyli traktował grafikę o rozmiarach w × h jako h pasków w × 1. Mimo to produkował całkiem niezłe zestawienia.
