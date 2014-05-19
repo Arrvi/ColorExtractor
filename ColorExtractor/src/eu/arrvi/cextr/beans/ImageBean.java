@@ -7,12 +7,16 @@ import java.io.Serializable;
 /**
  * Container for image storing.
  */
-public class ImageBean implements Serializable {
+public class ImageBean extends AbstractBean implements Serializable {
+	public final static int NOT_LOADED = 0;
+	public final static int LOADING = 1;
+	public final static int LOADED = 2;
+	public final static int ERROR_NOT_AN_IMAGE = -1;
+	
 	private BufferedImage image;
-	private PropertyChangeSupport pcs;
+	private int status = NOT_LOADED;
 	
 	public ImageBean() {
-		pcs = new PropertyChangeSupport(this);
 	}
 
 	/**
@@ -32,7 +36,21 @@ public class ImageBean implements Serializable {
 	public synchronized void setImage(BufferedImage image) {
 		BufferedImage oldImage = this.image;
 		this.image = image;
-		pcs.firePropertyChange("image", oldImage, image);
+		
+		firePropertyChange("image", oldImage, image);
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public synchronized void setStatus(int status) {
+		int oldValue = this.status;
+		this.status = status;
+		firePropertyChange("status", 
+				new Integer(oldValue), 
+				new Integer(status)
+		);
 	}
 	
 	

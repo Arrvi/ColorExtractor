@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import eu.arrvi.cextr.colortable.ColorTablePane;
-import eu.arrvi.cextr.imagepane.ImageLoaderPane;
+import eu.arrvi.cextr.imagepane.ImagePreviewPane;
 import eu.arrvi.cextr.menu.MenuBar;
 import eu.arrvi.cextr.parameters.ParametersPane;
 import eu.arrvi.cextr.statusbar.StatusBar;
@@ -50,7 +50,7 @@ public final class MainWindow extends JFrame {
 		JPanel mainPane = new JPanel(new BorderLayout(10,10));
 		mainPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		mainPane.add(new ImageLoaderPane(contr), BorderLayout.CENTER);
+		mainPane.add(new ImagePreviewPane(contr), BorderLayout.CENTER);
 		mainPane.add(new ParametersPane(contr), BorderLayout.EAST);
 		mainPane.add(new ColorTablePane(contr), BorderLayout.SOUTH);
 		
