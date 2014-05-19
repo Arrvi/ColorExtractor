@@ -73,8 +73,11 @@ public final class ImagePreviewPane extends JPanel {
 		displayButton();
 	}
 	
-
-
+	/**
+	 * Removes displayed components from pane and adds given one.
+	 * 
+	 * @param comp new component to display in pane
+	 */
 	private void switchDisplayComponent(Component comp) {
 		removeAll();
 		add(comp);
@@ -83,21 +86,31 @@ public final class ImagePreviewPane extends JPanel {
 	}
 
 	/**
-	 * Creates ImagePane for loaded image and displays it.
+	 * Sets display to image pane with given image. This should be only called when image bean has <tt>LOADED</tt> status.
 	 */
 	private void displayImage(BufferedImage image) {
 		switchDisplayComponent(imagePane);
 		imagePane.setImage(image);
 	}
 	
+	/**
+	 * Sets display to loading message. This should be called when image bean has <tt>LOADING</tt> status.
+	 */
 	private void displayLoading() {
 		switchDisplayComponent(loadingLabel);
 	}
 	
+	/**
+	 * Sets display to button that opens filechooser. This should be called after creating the pane 
+	 * and generally at <tt>NOT_LOADED</tt> and <tt>ERROR_*</tt> statuses.
+	 */
 	private void displayButton() {
 		switchDisplayComponent(loadButtonContainer);
 	}
 	
+	/**
+	 * Listener to handle image bean status changes.
+	 */
 	private PropertyChangeListener imageListener = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -122,7 +135,10 @@ public final class ImagePreviewPane extends JPanel {
 			}
 		}
 	};
-
+	
+	/**
+	 * Shows an error dialog. This should be called only when image bean has status <tt>ERROR_NOT_AN_IMAGE</tt>.
+	 */
 	private void showErrorDialog() {
 		JOptionPane.showMessageDialog(
 			controller.getMainJFrame(), 

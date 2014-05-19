@@ -8,7 +8,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import eu.arrvi.cextr.Controller;
-import eu.arrvi.cextr.MainWindow;
 import eu.arrvi.cextr.about.AboutWindow;
 
 /**

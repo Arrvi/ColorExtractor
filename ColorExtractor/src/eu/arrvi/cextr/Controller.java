@@ -11,9 +11,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
@@ -22,14 +19,23 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import eu.arrvi.cextr.beans.ColorsBean;
 import eu.arrvi.cextr.beans.ImageBean;
 import eu.arrvi.cextr.beans.ParametersBean;
-import eu.arrvi.cextr.imagepane.ImagePreviewPane;
 
+/**
+ * MVC Controller for application. It stores data beans as model. Also it contains public inner classes
+ * for specific actions.
+ * 
+ * @author Kris
+ *
+ */
 public class Controller {
 	private MainWindow mainWindow;
 	private final ImageBean image;
 	private final ParametersBean parameters;
 	private final ColorsBean colors;
 	
+	/**
+	 * Creates controller for application. Initiates data beans and frame with GUI. <b>It has to be called in EDT.</b>  
+	 */
 	public Controller() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -44,15 +50,30 @@ public class Controller {
 		mainWindow = new MainWindow(this);
 	}
 
+	/**
+	 * Returns main frame of application. May be useful as parent component for dialogs.
+	 * 
+	 * @return application main frame
+	 */
 	public JFrame getMainJFrame() {
 		return mainWindow;
 	}
 	
+	/**
+	 * Action for image loading. It contains file chooser and loading process handling.
+	 * Modifies image bean.
+	 * 
+	 * @author Kris
+	 *
+	 */
 	public class LoadImageAction implements ActionListener {
 		private JFileChooser fc = new JFileChooser();
 		private File selectedFile;
 		private BufferedImage loadedImage;
 		
+		/**
+		 * Creates action with filtered file chooser that is shown on actionPerformed call.
+		 */
 		public LoadImageAction() {
 			FileFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
 			fc.setFileFilter(filter);
@@ -98,12 +119,6 @@ public class Controller {
 						}
 						else {
 							image.setStatus(ImageBean.ERROR_NOT_AN_IMAGE);
-//							JOptionPane.showMessageDialog(
-//								getMainJFrame(), 
-//								"File is not an image or not readable.", 
-//								"Failed to load image", 
-//								JOptionPane.ERROR_MESSAGE
-//							);
 						}
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
@@ -135,7 +150,12 @@ public class Controller {
 			image.setImage(null);
 		}
 	}
-
+	
+	/**
+	 * Returns image data bean for adding listeners and other stuff.
+	 * 
+	 * @return image data bean
+	 */
 	public ImageBean getImageBean() {
 		return image;
 	}

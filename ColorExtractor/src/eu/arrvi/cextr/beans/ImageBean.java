@@ -1,7 +1,6 @@
 package eu.arrvi.cextr.beans;
 
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
 /**
@@ -39,11 +38,29 @@ public class ImageBean extends AbstractBean implements Serializable {
 		
 		firePropertyChange("image", oldImage, image);
 	}
-
+	
+	/**
+	 * Returns status of image as integer to be compared with class constants:
+	 * <ul>
+	 * 	<li><tt>0 / NOT_LOADED</tt> - image is not loaded. This is initial state and is set on close image action.
+	 * 	<li><tt>1 / LOADING</tt> - image is being loaded by swing worker. It is being done in separate thread. 
+	 * 	This state should not be active for more than couple of seconds. Loading info should be displayed.
+	 * 	<li><tt>2 / LOADED</tt> - image is loaded as buffered image in bean and should be displayed.
+	 * 	<li><tt>-1/ ERROR_NOT_AN_IMAGE</tt> - error occurred while interpreting file as image. 
+	 * 	Appropriate error message should be shown and later it should be treated as <tt>NOT_LOADED</tt> state.
+	 * </ul>
+	 * 
+	 * @return status of an image
+	 */
 	public int getStatus() {
 		return status;
 	}
-
+	
+	/**
+	 * Sets status code. For codes with description see {@link AbstractBean#getStatus()}
+	 * 
+	 * @param status status code to be set
+	 */
 	public synchronized void setStatus(int status) {
 		int oldValue = this.status;
 		this.status = status;

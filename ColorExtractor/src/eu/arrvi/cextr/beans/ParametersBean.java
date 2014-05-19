@@ -1,6 +1,5 @@
 package eu.arrvi.cextr.beans;
 
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
 /**
@@ -10,7 +9,7 @@ import java.io.Serializable;
  * @author Arrvi
  *
  */
-public class ParametersBean implements Serializable {
+public class ParametersBean extends AbstractBean implements Serializable {
 	// Analysis
 	
 	/**
@@ -38,10 +37,8 @@ public class ParametersBean implements Serializable {
 	private double difference;
 	private double modelSnap;
 	
-	private PropertyChangeSupport pcs;
 	
 	public ParametersBean() {
-		pcs = new PropertyChangeSupport(this);
 	}
 	
 	
@@ -65,7 +62,7 @@ public class ParametersBean implements Serializable {
 		int oldValue = this.resolution;
 		this.resolution = resolution;
 		
-		pcs.firePropertyChange("resolution", 
+		firePropertyChange("resolution", 
 				new Integer(oldValue),
 				new Integer(resolution)
 		);
@@ -84,7 +81,7 @@ public class ParametersBean implements Serializable {
 		double oldValue = this.tolerance;
 		this.tolerance = tolerance;
 		
-		pcs.firePropertyChange("tolerance", 
+		firePropertyChange("tolerance", 
 				new Double(oldValue), 
 				new Double(tolerance)
 		);
@@ -103,7 +100,7 @@ public class ParametersBean implements Serializable {
 		int oldValue = this.blurRadius;
 		this.blurRadius = blurRadius;
 		
-		pcs.firePropertyChange("blurRadius", 
+		firePropertyChange("blurRadius", 
 				new Integer(oldValue), 
 				new Integer(blurRadius)
 		);
@@ -122,7 +119,7 @@ public class ParametersBean implements Serializable {
 		double oldValue = this.intensity;
 		this.intensity = intensity;
 		
-		pcs.firePropertyChange("intensity", 
+		firePropertyChange("intensity", 
 				new Double(oldValue), 
 				new Double(intensity)
 		);

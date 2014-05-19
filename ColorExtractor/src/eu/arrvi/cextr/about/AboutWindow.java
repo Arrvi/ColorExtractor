@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import eu.arrvi.cextr.Main;
-import eu.arrvi.cextr.MainWindow;
 
 /**
  * Information dialog about application. Shown when clicked on <tt>Help &rarr; About</tt> menu.

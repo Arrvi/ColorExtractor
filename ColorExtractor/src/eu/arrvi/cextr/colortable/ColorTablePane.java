@@ -35,6 +35,8 @@ public class ColorTablePane extends JPanel {
 		
 		table = new JTable(new ColorTableModel());
 		table.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		
+		// FIXME replace with working renderer!
 		TableColumn preview = table.getColumn("PV");
 		preview.setCellRenderer(new DefaultTableCellRenderer() {
 			@Override
