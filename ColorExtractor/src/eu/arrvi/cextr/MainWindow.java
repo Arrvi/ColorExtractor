@@ -5,8 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import eu.arrvi.cextr.colortable.ColorTablePane;
 import eu.arrvi.cextr.imagepane.ImagePreviewPane;
