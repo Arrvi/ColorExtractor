@@ -24,11 +24,49 @@ public class Controller {
 	private final ParametersBean parameters = new ParametersBean();
 	private final ColorsBean colors = new ColorsBean();
 	
+	private final Action loadImageAction = new LoadImageAction(this);
+
+	private final Action analyzeAction = new AnalyzeAction(this);
+	
+	private final Action closeImageAction = new CloseImageAction(this);
+	
+	private final Action exitAction = new ExitAction(this);
+	
+	
 	/**
 	 * Creates controller for application. Initiates data beans and frame with GUI. <b>It has to be called in EDT.</b>  
 	 */
 	public Controller() {
 		mainWindow = new MainWindow(this);
+	}
+	
+	public Action getAnalyzeAction() {
+		return analyzeAction;
+	}
+	
+	public Action getCloseImageAction() {
+		return closeImageAction;
+	}
+	
+	public ColorsBean getColorsBean() {
+		return colors;
+	}
+	
+	public Action getExitAction() {
+		return exitAction;
+	}
+	
+	/**
+	 * Returns image data bean for adding listeners and other stuff.
+	 * 
+	 * @return image data bean
+	 */
+	public ImageBean getImageBean() {
+		return image;
+	}
+	
+	public Action getLoadAction() {
+		return loadImageAction;
 	}
 
 	/**
@@ -39,47 +77,8 @@ public class Controller {
 	public JFrame getMainJFrame() {
 		return mainWindow;
 	}
-	
-	
-	public Action getLoadAction() {
-		return loadImageAction;
-	}
-	
-	private final Action loadImageAction = new LoadImageAction(this);
-	
-	
-	public Action getAnalyzeAction() {
-		return analyzeAction;
-	}
-	
-	private final Action analyzeAction = new AnalyzeAction(this);
-	
-	public Action getCloseImageAction() {
-		return closeImageAction;
-	}
-	
-	private final Action closeImageAction = new CloseImageAction(this);
-	
-	public Action getExitAction() {
-		return exitAction;
-	}
-	
-	private final Action exitAction = new ExitAction(this);
-	
-	/**
-	 * Returns image data bean for adding listeners and other stuff.
-	 * 
-	 * @return image data bean
-	 */
-	public ImageBean getImageBean() {
-		return image;
-	}
 
 	public ParametersBean getParametersBean() {
 		return parameters;
-	}
-
-	public ColorsBean getColorsBean() {
-		return colors;
 	}
 }

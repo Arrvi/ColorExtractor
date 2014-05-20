@@ -98,6 +98,18 @@ public final class ImagePreviewPane extends JPanel {
 	}
 	
 	/**
+	 * Shows an error dialog. This should be called only when image bean has status <tt>ERROR_NOT_AN_IMAGE</tt>.
+	 */
+	private void showErrorDialog() {
+		JOptionPane.showMessageDialog(
+			controller.getMainJFrame(), 
+			"File is not an image or not readable.", 
+			"Failed to load image", 
+			JOptionPane.ERROR_MESSAGE
+		);
+	}
+
+	/**
 	 * Listener to handle image bean status changes.
 	 */
 	private PropertyChangeListener imageListener = new PropertyChangeListener() {
@@ -124,16 +136,4 @@ public final class ImagePreviewPane extends JPanel {
 			}
 		}
 	};
-	
-	/**
-	 * Shows an error dialog. This should be called only when image bean has status <tt>ERROR_NOT_AN_IMAGE</tt>.
-	 */
-	private void showErrorDialog() {
-		JOptionPane.showMessageDialog(
-			controller.getMainJFrame(), 
-			"File is not an image or not readable.", 
-			"Failed to load image", 
-			JOptionPane.ERROR_MESSAGE
-		);
-	}
 }

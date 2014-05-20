@@ -46,6 +46,11 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 		updateMiddleLabel();
 	}
 
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		updateMiddleLabel();
+	}
+
 	private static String getResolutionString(int value, double ratio) {
 		return value+"x"+(int)((double)value/ratio);
 	}
@@ -64,11 +69,6 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 			return ratio;
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		updateMiddleLabel();
-	}
-	
 	private void updateMiddleLabel() {
 		middleLabel.setText(getResolutionString());
 	}
