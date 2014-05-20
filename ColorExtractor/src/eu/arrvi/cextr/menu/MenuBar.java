@@ -52,15 +52,15 @@ public class MenuBar extends JMenuBar {
 		
 		JMenuItem item;
 		
-		item = new JMenuItem(controller.new LoadImageAction());
+		item = new JMenuItem(controller.getLoadAction());
 		menu.add(item);
 		
-		item = new JMenuItem(controller.new CloseImageAction());
+		item = new JMenuItem(controller.getCloseImageAction());
 		menu.add(item);
 		
 		menu.addSeparator();
 		
-		item = new JMenuItem(controller.new ExitAction());
+		item = new JMenuItem(controller.getExitAction());
 		menu.add(item);
 		
 		return menu;

@@ -58,9 +58,8 @@ public final class ImagePreviewPane extends JPanel {
 		
 		imagePane = new ImagePane();
 		
-		loadImageButton = new JButton("Load image");
+		loadImageButton = new JButton(controller.getLoadAction());
 		loadImageButton.setMargin(new Insets(10, 25, 10, 25));
-		loadImageButton.setAction(controller.new LoadImageAction());
 		
 		loadButtonContainer = new JPanel(new GridBagLayout());
 		loadButtonContainer.add(loadImageButton);

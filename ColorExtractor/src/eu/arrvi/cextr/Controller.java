@@ -4,12 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -34,24 +37,14 @@ import eu.arrvi.cextr.beans.ParametersBean;
  */
 public class Controller {
 	private MainWindow mainWindow;
-	private final ImageBean image;
-	private final ParametersBean parameters;
-	private final ColorsBean colors;
+	private final ImageBean image = new ImageBean();
+	private final ParametersBean parameters = new ParametersBean();
+	private final ColorsBean colors = new ColorsBean();
 	
 	/**
 	 * Creates controller for application. Initiates data beans and frame with GUI. <b>It has to be called in EDT.</b>  
 	 */
 	public Controller() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		image = new ImageBean();
-		parameters = new ParametersBean();
-		colors = new ColorsBean();
-		
 		mainWindow = new MainWindow(this);
 	}
 
@@ -64,6 +57,10 @@ public class Controller {
 		return mainWindow;
 	}
 	
+	
+	public Action getLoadAction() {
+		return loadAction;
+	}
 	/**
 	 * Action for image loading. It contains file chooser and loading process handling.
 	 * Modifies image bean.
@@ -71,7 +68,7 @@ public class Controller {
 	 * @author Kris
 	 *
 	 */
-	public class LoadImageAction extends AbstractAction {
+	private final Action loadAction = new AbstractAction() {
 		private JFileChooser fc = new JFileChooser();
 		private File selectedFile;
 		private BufferedImage loadedImage;
@@ -79,7 +76,7 @@ public class Controller {
 		/**
 		 * Creates action with filtered file chooser that is shown on actionPerformed call.
 		 */
-		public LoadImageAction() {
+		{
 			FileFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
 			fc.setFileFilter(filter);
 			
@@ -141,24 +138,53 @@ public class Controller {
 			}.execute();	
 		}
 		
+	};
+	
+	
+	public Action getAnalyzeAction() {
+		return analyzeAction;
 	}
 	
-	public class AnalyzeAction extends AbstractAction {
-
+	private final Action analyzeAction = new AbstractAction() {
+		{
+			putValue(MNEMONIC_KEY, KeyEvent.VK_A);
+			putValue(NAME, "Analyze");
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
 		
+	};
+	
+	public Action getCloseImageAction() {
+		return closeImageAction;
 	}
 	
-	public class CloseImageAction extends AbstractAction {
+	private final Action closeImageAction = new AbstractAction() {
 		
-		public CloseImageAction() {
+		private PropertyChangeListener imageListener = new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if ((int)evt.getNewValue() == ImageBean.LOADED) {
+					setEnabled(true);
+				}
+				else {
+					setEnabled(false);
+				}
+			}
+		};
+		
+		
+		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control W"));
 			putValue(MNEMONIC_KEY, KeyEvent.VK_C);
 			putValue(NAME, "Close image");
+			setEnabled(false);
+			
+			image.addPropertyChangeListener("status", imageListener);
 		}
 		
 		@Override
@@ -166,11 +192,14 @@ public class Controller {
 			image.setStatus(ImageBean.NOT_LOADED);
 			image.setImage(null);
 		}
+	};
+	
+	public Action getExitAction() {
+		return exitAction;
 	}
 	
-	public class ExitAction extends AbstractAction {
-		
-		public ExitAction() {
+	private final Action exitAction = new AbstractAction() {
+		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control X"));
 			putValue(MNEMONIC_KEY, KeyEvent.VK_X);
 			putValue(NAME, "Exit...");
@@ -189,7 +218,7 @@ public class Controller {
 			}
 		}
 		
-	}
+	};
 	
 	/**
 	 * Returns image data bean for adding listeners and other stuff.
