@@ -21,7 +21,7 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 	public ResolutionSlider(BoundedRangeModel model) {
 		super(model);
 		
-		this.setBorder(new EmptyBorder(0, 10, 0, 10));
+		//this.setBorder(new EmptyBorder(0, 10, 0, 10));
 		this.setPaintLabels(true);
 		this.setPaintTicks(true);
 		
@@ -49,6 +49,7 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		updateMiddleLabel();
+		repaint();
 	}
 
 	private static String getResolutionString(int value, double ratio) {
