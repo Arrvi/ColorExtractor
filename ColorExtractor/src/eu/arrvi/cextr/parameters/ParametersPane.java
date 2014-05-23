@@ -2,6 +2,7 @@ package eu.arrvi.cextr.parameters;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -34,7 +36,12 @@ public class ParametersPane extends JPanel {
 		tabs.addTab("Analysis", createAnalysisPane());
 		tabs.addTab("Sorting", createSortingPane());
 		
-		this.add(tabs);
+		this.add(tabs, BorderLayout.CENTER);
+		
+		JButton analyzeButton = new JButton(controller.getAnalyzeAction());
+		JPanel buttonContainer = new JPanel(new GridBagLayout());
+		buttonContainer.add(analyzeButton);
+		this.add(buttonContainer, BorderLayout.SOUTH);
 	}
 	
 	private JPanel createAnalysisPane() {

@@ -15,7 +15,7 @@ public class ExitAction extends AbstractAction {
 	public ExitAction(Controller contr){
 		controller = contr;
 		
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control X"));
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("control Q"));
 		putValue(MNEMONIC_KEY, KeyEvent.VK_X);
 		putValue(NAME, "Exit...");
 	}

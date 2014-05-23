@@ -10,6 +10,7 @@ public class ImageBean extends AbstractBean implements Serializable {
 	public final static int NOT_LOADED = 0;
 	public final static int LOADING = 1;
 	public final static int LOADED = 2;
+	public final static int ANALYZING = 3;
 	public final static int ERROR_NOT_AN_IMAGE = -1;
 	
 	private BufferedImage image;

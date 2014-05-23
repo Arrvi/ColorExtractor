@@ -131,6 +131,10 @@ public final class ImagePreviewPane extends JPanel {
 				displayButton();
 				break;
 				
+			case ImageBean.ANALYZING:
+				// do nothing
+				break;
+				
 			default:
 				throw new RuntimeException("Unknown image code: " + (int)evt.getNewValue());
 			}
