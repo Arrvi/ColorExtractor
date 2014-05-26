@@ -34,6 +34,11 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
+				if ( evt.getPropertyName().equals("progress") ) {
+					controller.setStatus(
+						"Analyzing: "+(double)Math.round((double)evt.getNewValue()*10000)/100
+					);
+				}
 				controller.getMainJFrame().repaint();
 			}
 		});

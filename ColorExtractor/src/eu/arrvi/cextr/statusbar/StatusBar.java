@@ -2,11 +2,16 @@ package eu.arrvi.cextr.statusbar;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+
+import eu.arrvi.cextr.Controller;
 
 /**
  * Status bar for main window. Displays runtime messages and loaded image resolution.
@@ -14,16 +19,21 @@ import javax.swing.border.EmptyBorder;
  * @author Kris
  *
  */
-public class StatusBar extends JPanel {
+public class StatusBar extends JPanel implements ActionListener {
+	final private Controller controller;
 	final private JLabel status;
 	final private JLabel resolution;
 	private Dimension res;
 	
+	private Timer timer;
+	
+	
 	/**
 	 * Creates status bar with 2 fields and upper separator (acting as top etched border).
 	 */
-	public StatusBar() {
+	public StatusBar(Controller contr) {
 		super();
+		controller = contr;
 		this.setLayout(new BorderLayout());
 		
 		status = new JLabel(" ");
@@ -37,6 +47,9 @@ public class StatusBar extends JPanel {
 		this.add(status, BorderLayout.CENTER);
 		this.add(resolution, BorderLayout.EAST);
 		this.add(new JSeparator(JSeparator.HORIZONTAL), BorderLayout.NORTH);
+		
+		timer = new Timer(1000, this);
+		timer.setRepeats(false);
 	}
 
 	/**
@@ -54,7 +67,18 @@ public class StatusBar extends JPanel {
 	 * @param str New message
 	 */
 	public void setStatus(String str) {
+		if ( str == null || str.equals("") ) str = " "; 
 		status.setText(str);
+		timer.stop();
+	}
+	public void setStatus(String str, int decay) {
+		setStatus(str);
+		timer.setInitialDelay(decay);
+		timer.start();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setStatus(null);
 	}
 	
 	/**
@@ -80,4 +104,6 @@ public class StatusBar extends JPanel {
 		else
 			resolution.setText(" ");
 	}
+
+
 }

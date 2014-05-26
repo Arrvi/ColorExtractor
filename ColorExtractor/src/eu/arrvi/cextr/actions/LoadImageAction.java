@@ -1,5 +1,6 @@
 package eu.arrvi.cextr.actions;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -68,6 +69,7 @@ public class LoadImageAction extends AbstractAction {
 	 */
 	public void loadImage(final File fileToLoad) {
 		controller.getImageBean().setStatus(ImageBean.LOADING);
+		controller.setStatus("Loadin image...");
 		
 		new SwingWorker<Boolean, Void>() {
 			@Override
@@ -86,15 +88,18 @@ public class LoadImageAction extends AbstractAction {
 					if (get()) {
 						controller.getImageBean().setImage(loadedImage);
 						controller.getImageBean().setStatus(ImageBean.LOADED);
+						controller.setStatus("Image loaded", 5000);
+						controller.setStatusResolution(new Dimension(
+							loadedImage.getWidth(), 
+							loadedImage.getHeight()
+						));
 					}
 					else {
 						controller.getImageBean().setStatus(ImageBean.ERROR_NOT_AN_IMAGE);
+						controller.setStatus("File is not readable or not an image");
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
+					controller.setStatus("Error occured: "+e.getMessage());
 					e.printStackTrace();
 				}
 			};

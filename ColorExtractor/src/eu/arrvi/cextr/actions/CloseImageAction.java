@@ -29,6 +29,8 @@ public class CloseImageAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		controller.getImageBean().setStatus(ImageBean.NOT_LOADED);
 		controller.getImageBean().setImage(null);
+		controller.setStatus("Image closed", 3000);
+		controller.setStatusResolution(null);
 	}
 	
 	private PropertyChangeListener imageListener = new PropertyChangeListener() {
