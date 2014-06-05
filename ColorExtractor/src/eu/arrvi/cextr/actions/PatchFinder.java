@@ -52,18 +52,23 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 		return patches;
 	}
 	
+	private double lastProgress = 0;
 	@Override
 	protected void process(List<Double> chunks) {
 		for (double part : chunks) {
 			System.out.println("Done "+(double)Math.round(part*10000)/100+"%");
 		}
-		firePropertyChange("progress", 0, chunks.get(0));
+		firePropertyChange("progress", lastProgress, chunks.get(0));
+		lastProgress = chunks.get(0);
 	}
 	
 	@Override
 	protected void done() {
 		try {
-			System.out.println(get().size()+" patches");
+			int patchesCount = get().size();
+			System.out.println(patchesCount+" patches");
+			firePropertyChange("progress", lastProgress, 1);
+			lastProgress=1;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

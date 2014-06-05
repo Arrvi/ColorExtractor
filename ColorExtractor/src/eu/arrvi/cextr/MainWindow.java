@@ -54,7 +54,7 @@ public final class MainWindow extends JFrame {
 		
 		this.add(mainPane, BorderLayout.CENTER);
 
-		status = new StatusBar();
+		status = new StatusBar(controller);
 		this.add(status, BorderLayout.SOUTH);
 		
 		this.pack();
@@ -64,5 +64,9 @@ public final class MainWindow extends JFrame {
 
 	public Controller getController() {
 		return controller;
+	}
+	
+	public StatusBar getStatusBar() {
+		return status;
 	}
 }

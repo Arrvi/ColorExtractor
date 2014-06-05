@@ -1,5 +1,7 @@
 package eu.arrvi.cextr;
 
+import java.awt.Dimension;
+
 import javax.swing.Action;
 import javax.swing.JFrame;
 
@@ -38,6 +40,7 @@ public class Controller {
 	 */
 	public Controller() {
 		mainWindow = new MainWindow(this);
+		setStatus("Ready");
 	}
 	
 	public Action getAnalyzeAction() {
@@ -80,5 +83,17 @@ public class Controller {
 
 	public ParametersBean getParametersBean() {
 		return parameters;
+	}
+	
+	public void setStatus(String status) {
+		mainWindow.getStatusBar().setStatus(status);
+	}
+	
+	public void setStatusResolution(Dimension res) {
+		mainWindow.getStatusBar().setResolution(res);
+	}
+
+	public void setStatus(String status, int decay) {
+		mainWindow.getStatusBar().setStatus(status, decay);
 	}
 }
