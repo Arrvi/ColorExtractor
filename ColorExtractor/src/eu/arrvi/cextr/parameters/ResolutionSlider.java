@@ -5,14 +5,13 @@ import java.util.Hashtable;
 import javax.swing.BoundedRangeModel;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class ResolutionSlider extends JSlider implements ChangeListener {
-	private final static double DEFAULT_RATIO = 16d/9d;
-	private double ratio=0;
 	private JLabel middleLabel;
+	private JLabel minLabel;
+	private JLabel maxLabel;
 	
 	public ResolutionSlider() {
 		this(new ResolutionSliderModel());
@@ -21,34 +20,43 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 	public ResolutionSlider(BoundedRangeModel model) {
 		super(model);
 		
-		//this.setBorder(new EmptyBorder(0, 10, 0, 10));
 		this.setPaintLabels(true);
-		this.setPaintTicks(true);
 		
 		this.addChangeListener(this);
 		
-		this.setMajorTickSpacing((getMaximum()-1)/10);
-		
-		middleLabel = new JLabel(getResolutionString(getMaximum(), getRatio()));
+		minLabel = new JLabel(getVerticalResolutionString(getFakeMaximum(), getRatio()));
+		middleLabel = new JLabel(getResolutionString(getFakeMaximum(), getRatio()));
+		maxLabel = new JLabel(getVerticalResolutionString(getFakeMaximum(), getRatio()));
 		
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		
 		labelTable.put(
-			new Integer(this.getMinimum()), 
-			new JLabel(getVerticalResolutionString(this.getMinimum(), this.getRatio()))
+			this.getMinimum(), 
+			minLabel
 		);
-		labelTable.put(this.getMaximum()/2, middleLabel);
 		labelTable.put(
-			new Integer(this.getMaximum()), 
-			new JLabel(getVerticalResolutionString(this.getMaximum(), this.getRatio()))
+			this.getMaximum()/2, 
+			middleLabel
 		);
+		labelTable.put(
+			this.getMaximum(), 
+			maxLabel
+		);
+		
 		this.setLabelTable(labelTable);
 		
-		updateMiddleLabel();
+		updateLabels();
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		updateMiddleLabel();
+		updateLabels();
+	}
+
+	private void updateLabels() {
+		minLabel.setText(getVerticalResolutionString(getFakeMinimum(), getRatio()));
+		middleLabel.setText(getResolutionString());
+		maxLabel.setText(getVerticalResolutionString(getFakeMaximum(), getRatio()));
 		repaint();
 	}
 
@@ -60,17 +68,22 @@ public class ResolutionSlider extends JSlider implements ChangeListener {
 	}
 	
 	private String getResolutionString() {
-		return getResolutionString(this.getValue(), this.getRatio());
+		return getResolutionString(this.getFakeValue(), this.getRatio());
 	}
 
-	private double getRatio() {
-		if ( ratio == 0 ) 
-			return DEFAULT_RATIO;
-		else
-			return ratio;
+	public int getFakeValue() {
+		return ((ResolutionSliderModel)getModel()).getFakeValue();
 	}
 
-	private void updateMiddleLabel() {
-		middleLabel.setText(getResolutionString());
+	public int getFakeMinimum() {
+		return ((ResolutionSliderModel)getModel()).getFakeMinimum();
+	}
+	
+	public int getFakeMaximum() {
+		return ((ResolutionSliderModel)getModel()).getFakeMaximum();
+	}
+
+	public double getRatio() {
+		return ((ResolutionSliderModel)getModel()).getRatio();
 	}
 }

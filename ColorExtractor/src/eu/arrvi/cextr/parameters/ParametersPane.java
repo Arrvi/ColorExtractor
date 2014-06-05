@@ -3,12 +3,10 @@ package eu.arrvi.cextr.parameters;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoundedRangeModel;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
@@ -16,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import eu.arrvi.cextr.Controller;
 import eu.arrvi.cextr.beans.ImageBean;
@@ -29,7 +29,7 @@ public class ParametersPane extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Parameters"));
-		this.setPreferredSize(new Dimension(200, 0));
+		this.setPreferredSize(new Dimension(250, 0));
 		
 		JTabbedPane tabs = new JTabbedPane();
 		
@@ -68,29 +68,63 @@ public class ParametersPane extends JPanel {
 	
 	private JPanel createSortingPane() {
 		JPanel sorting = new JPanel();
+		sorting.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		sorting.setLayout(new BoxLayout(sorting, BoxLayout.PAGE_AXIS));
+		JSlider slider;
+		
+		String[] props = controller.getParametersBean().getSortingProperties();
+		for (String property : props) {
+			sorting.add(new JLabel(property));
+			slider = new JSlider(new BeanControlledModel(property));
+			sorting.add(slider);
+		}
 		
 		return sorting;
 	}
 	
-	private class BeanControlledResolutionModel extends ResolutionSliderModel implements PropertyChangeListener {
+	private class BeanControlledResolutionModel extends ResolutionSliderModel implements PropertyChangeListener, ChangeListener {
 
 		public BeanControlledResolutionModel() {
-			controller.getImageBean().addPropertyChangeListener("image", this);
+			controller.getImageBean().addPropertyChangeListener("status", this);
+			this.addChangeListener(this);
 		}
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			if (controller.getImageBean().getStatus() == ImageBean.LOADED) {
-				setMaximum(((BufferedImage)evt.getNewValue()).getWidth());
+			if ((int)evt.getNewValue() == ImageBean.LOADED) {
+				setMaximum(controller.getImageBean().getImage().getWidth());
+				setRatio((double)controller.getImageBean().getImage().getWidth()/controller.getImageBean().getImage().getHeight());
+			}
+			else if ((int)evt.getNewValue() == ImageBean.NOT_LOADED) {
+				setMaximum(DEFAULT_MAX);
+				setRatio(DEFAULT_RATIO);
 			}
 		}
 		
+		public void setValue(int n) {
+			super.setValue(n);
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			if ( !getValueIsAdjusting() ) {
+				controller.getParametersBean().setResolution(getFakeValue());
+			}
+		}
+		
+		
+		
 	}
 	
-	private class BeanControlledModel extends DefaultBoundedRangeModel implements PropertyChangeListener {
+	private class BeanControlledModel extends DefaultBoundedRangeModel implements PropertyChangeListener, ChangeListener {
+		private final static int DEFAULT = 50;
+		
+		private String property; 
 		
 		public BeanControlledModel(String property) {
+			this.property = property;
 			controller.getParametersBean().addPropertyChangeListener(property, this);
+			setValue(DEFAULT);
 		}
 		
 		@Override
@@ -100,5 +134,15 @@ public class ParametersPane extends JPanel {
 			}
 		}
 		
+		public void setValue(int n) {
+			super.setValue(n);
+			controller.getParametersBean();
+		}
+
+		public void stateChanged(ChangeEvent e) {
+			if ( !getValueIsAdjusting() ) {
+				controller.getParametersBean().setProperty(property, getValue());
+			}
+		}
 	}
 }

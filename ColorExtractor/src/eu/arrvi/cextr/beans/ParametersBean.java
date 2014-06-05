@@ -36,6 +36,7 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	private double saturation;
 	private double difference;
 	private double modelSnap;
+	private double patchSize;
 	
 	
 	public ParametersBean() {
@@ -135,8 +136,16 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	 * @param brightness the brightness to set
 	 */
 	public synchronized void setBrightness(double brightness) {
+		double oldValue = this.brightness;
 		this.brightness = brightness;
+		
+		firePropertyChange("brightness", 
+				new Double(oldValue), 
+				new Double(brightness)
+		);
 	}
+	
+	
 	/**
 	 * @return the saturation
 	 */
@@ -147,8 +156,16 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	 * @param saturation the saturation to set
 	 */
 	public synchronized void setSaturation(double saturation) {
+		double oldValue = this.saturation;
 		this.saturation = saturation;
+		
+		firePropertyChange("saturation", 
+				new Double(oldValue), 
+				new Double(saturation)
+		);
 	}
+	
+	
 	/**
 	 * @return the difference
 	 */
@@ -159,18 +176,73 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	 * @param difference the difference to set
 	 */
 	public synchronized void setDifference(double difference) {
+		double oldValue = this.difference;
 		this.difference = difference;
+		
+		firePropertyChange("difference", 
+				new Double(oldValue), 
+				new Double(difference)
+		);
 	}
+	
 	/**
 	 * @return the modelSnap
 	 */
 	public double getModelSnap() {
 		return modelSnap;
 	}
+
 	/**
 	 * @param modelSnap the modelSnap to set
 	 */
 	public synchronized void setModelSnap(double modelSnap) {
+		double oldValue = this.modelSnap;
 		this.modelSnap = modelSnap;
+		
+		firePropertyChange("modelSnap", 
+				new Double(oldValue), 
+				new Double(modelSnap)
+		);
+	}
+	
+	/**
+	 * @return the patchSize
+	 */
+	public double getPatchSize() {
+		return patchSize;
+	}
+	/**
+	 * @param patchSize the patchSize to set
+	 */
+	public void setPatchSize(double patchSize) {
+		double oldValue = this.patchSize;
+		this.patchSize = patchSize;
+		
+		firePropertyChange("patchSize", 
+				new Double(oldValue), 
+				new Double(patchSize)
+		);
+	}
+
+
+	public void setProperty(String property, int value) {
+		switch (property) {
+		case "resolution": setResolution(value); break;
+		case "tolerance": setTolerance(value/100d); break;
+		case "blurRadius": setBlurRadius(value); break;
+		case "intensity": setIntensity(value/100d); break;
+		case "brightness": setBrightness(value/100d); break;
+		case "saturation": setSaturation(value/100d); break;
+		case "difference": setDifference(value/100d); break;
+		case "modelSnap": setModelSnap(value/100d); break;
+		case "patchSize": setPatchSize(value/100d); break;
+		default: throw new IllegalArgumentException();
+		}
+	}
+
+
+	public String[] getSortingProperties() {
+		String[] props = { "intensity", "brightness", "saturation", "difference", "modelSnap", "patchSize" };
+		return props;
 	}
 }
