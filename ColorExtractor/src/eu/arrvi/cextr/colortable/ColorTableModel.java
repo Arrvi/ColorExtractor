@@ -1,6 +1,7 @@
 package eu.arrvi.cextr.colortable;
 
 import eu.arrvi.cextr.colortable.Color;
+import eu.arrvi.cextr.common.ColorPatch;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,23 +11,17 @@ import javax.swing.table.AbstractTableModel;
 public class ColorTableModel extends AbstractTableModel {
 	private final static String[] columnNames = {
 		"PV",
+		"#",
 		"RGB",
 		"HSV",
 		"HTML"
 	};
 	
 	// TODO clear testing data
-	private ArrayList<Color> data;
+	private ArrayList<ColorPatch> data;
 	
 	public ColorTableModel() {
 		super();
-		
-		data = new ArrayList<Color>();
-		Random rand = new Random();
-		
-		for (int i = 0; i < 5; i++) {
-			data.add(new Color(rand.nextInt()));
-		}
 	}
 	
 	@Override
@@ -52,15 +47,22 @@ public class ColorTableModel extends AbstractTableModel {
 		if ( data == null )
 			return null;
 		
-		Color color = data.get(row);
+		ColorPatch patch = data.get(row);
+		Color color = patch.getColor();
 		
 		switch (col) {
-			case 1: return color.toRGBString();
-			case 2: return color.toHSVString();
-			case 3: return color.toHTMLString();
+			case 1: return patch.getSize();
+			case 2: return color.toRGBString();
+			case 3: return color.toHSVString();
+			case 4: return color.toHTMLString();
 				
 			default: return color;
 		}
+	}
+
+	public void setPatches(ArrayList<ColorPatch> patches) {
+		data = patches;
+		fireTableDataChanged();
 	}
 
 }

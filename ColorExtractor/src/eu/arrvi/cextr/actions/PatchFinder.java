@@ -68,6 +68,7 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 			int patchesCount = get().size();
 			System.out.println(patchesCount+" patches");
 			firePropertyChange("progress", lastProgress, 1d);
+			firePropertyChange("done", false, true);
 			lastProgress=1d;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -102,11 +103,6 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 					goLeft(patch, x, y);
 					goRight(patch, x, y);
 					splitDown(patch, x, y);
-					
-//					image.setRGB(x, y, GREEN);
-				}
-				else {
-					image.setRGB(x, y, RED);
 				}
 			}
 			exclude(x, y);

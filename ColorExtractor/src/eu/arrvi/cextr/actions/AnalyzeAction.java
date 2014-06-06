@@ -83,11 +83,8 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 	}
 	
 	private void analyzeImage(BufferedImage image) {
-//		ImagePane ip = new ImagePane(image);
-//		ip.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
-//		JOptionPane.showMessageDialog(null, ip, "Image", 0);
-		
-		PatchFinder worker = new PatchFinder(
+		controller.setStatus("Analyzing...");
+		final PatchFinder worker = new PatchFinder(
 				image, 
 				controller.getParametersBean().getTolerance(), 
 				40 // TODO parameter
@@ -97,12 +94,24 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 			public void propertyChange(PropertyChangeEvent evt) {
 				if ( evt.getPropertyName().equals("progress") ) {
 					controller.setStatus(
-						"Analyzing: "+(double)Math.round((double)evt.getNewValue()*10000)/100
+						"Analyzing: "+(double)Math.round((double)evt.getNewValue()*10000)/100+"%"
 					);
 				}
-				controller.getMainJFrame().repaint();
+				if ( evt.getPropertyName().equals("done") && (boolean)evt.getNewValue() ) {
+					try {
+						sortPatches(worker.get());
+					} catch (InterruptedException | ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
+
 		});
 		worker.execute();
+	}
+	
+	private void sortPatches(ArrayList<ColorPatch> patches) {
+		controller.getColorsBean().setPatches(patches);
 	}
 }
