@@ -245,4 +245,12 @@ public class ParametersBean extends AbstractBean implements Serializable {
 		String[] props = { "intensity", "brightness", "saturation", "difference", "modelSnap", "patchSize" };
 		return props;
 	}
+	
+	@Override
+	public String toString() {
+		return "Params ["+
+				"res "+getResolution()+", tol "+getTolerance()+", blu "+getBlurRadius()+
+				", int "+getIntensity()+", bri "+getBrightness()+", sat "+getSaturation()+
+				", dif "+getDifference()+", mds "+getModelSnap()+", pcs "+getPatchSize()+"]";
+	}
 }

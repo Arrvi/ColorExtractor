@@ -26,7 +26,7 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 	public PatchFinder(BufferedImage image, double tolerance, int minSize) {
 		this.image = image;
 		excludePixels = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-		this.tolerance = tolerance;
+		this.tolerance = tolerance*100;
 		this.minSize = minSize;
 	}
 
@@ -51,7 +51,7 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 		
 		return patches;
 	}
-	
+
 	private double lastProgress = 0;
 	@Override
 	protected void process(List<Double> chunks) {
@@ -67,8 +67,8 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 		try {
 			int patchesCount = get().size();
 			System.out.println(patchesCount+" patches");
-			firePropertyChange("progress", lastProgress, 1);
-			lastProgress=1;
+			firePropertyChange("progress", lastProgress, 1d);
+			lastProgress=1d;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

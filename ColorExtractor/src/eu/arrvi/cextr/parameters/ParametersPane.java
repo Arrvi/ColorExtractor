@@ -123,14 +123,18 @@ public class ParametersPane extends JPanel {
 		
 		public BeanControlledModel(String property) {
 			this.property = property;
-			controller.getParametersBean().addPropertyChangeListener(property, this);
+			controller.getParametersBean().setProperty(property, DEFAULT);
+//			controller.getParametersBean().addPropertyChangeListener(property, this);
+			this.addChangeListener(this);
+			
 			setValue(DEFAULT);
 		}
 		
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			if ( (int)evt.getNewValue() != getValue() ) {
-				setValue((int)evt.getNewValue());
+			
+			if ( ((Number)evt.getNewValue()).intValue() != getValue() ) {
+				setValue(((Number)evt.getNewValue()).intValue());
 			}
 		}
 		
