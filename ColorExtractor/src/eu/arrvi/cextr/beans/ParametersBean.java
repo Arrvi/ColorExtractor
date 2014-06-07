@@ -31,7 +31,7 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	private int blurRadius;
 	
 	// Sorting
-	private double intensity;
+	private double temperature;
 	private double brightness;
 	private double saturation;
 	private double difference;
@@ -110,19 +110,19 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	/**
 	 * @return the intensity
 	 */
-	public double getIntensity() {
-		return intensity;
+	public double getTemperature() {
+		return temperature;
 	}
 	/**
-	 * @param intensity the intensity to set
+	 * @param temperature the intensity to set
 	 */
-	public synchronized void setIntensity(double intensity) {
-		double oldValue = this.intensity;
-		this.intensity = intensity;
+	public synchronized void setTemperature(double temperature) {
+		double oldValue = this.temperature;
+		this.temperature = temperature;
 		
-		firePropertyChange("intensity", 
+		firePropertyChange("temperature", 
 				new Double(oldValue), 
-				new Double(intensity)
+				new Double(temperature)
 		);
 	}
 	
@@ -230,7 +230,7 @@ public class ParametersBean extends AbstractBean implements Serializable {
 		case "resolution": setResolution(value); break;
 		case "tolerance": setTolerance(value/100d); break;
 		case "blurRadius": setBlurRadius(value); break;
-		case "intensity": setIntensity(value/100d); break;
+		case "temperature": setTemperature(value/100d); break;
 		case "brightness": setBrightness(value/100d); break;
 		case "saturation": setSaturation(value/100d); break;
 		case "difference": setDifference(value/100d); break;
@@ -242,7 +242,7 @@ public class ParametersBean extends AbstractBean implements Serializable {
 
 
 	public String[] getSortingProperties() {
-		String[] props = { "intensity", "brightness", "saturation", "difference", "modelSnap", "patchSize" };
+		String[] props = { "temperature", "brightness", "saturation", "difference", /* "modelSnap", */ "patchSize" };
 		return props;
 	}
 	
@@ -250,7 +250,7 @@ public class ParametersBean extends AbstractBean implements Serializable {
 	public String toString() {
 		return "Params ["+
 				"res "+getResolution()+", tol "+getTolerance()+", blu "+getBlurRadius()+
-				", int "+getIntensity()+", bri "+getBrightness()+", sat "+getSaturation()+
+				", tem "+getTemperature()+", bri "+getBrightness()+", sat "+getSaturation()+
 				", dif "+getDifference()+", mds "+getModelSnap()+", pcs "+getPatchSize()+"]";
 	}
 }

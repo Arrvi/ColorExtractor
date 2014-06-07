@@ -4,11 +4,12 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import eu.arrvi.cextr.colortable.Color;
+import eu.arrvi.cextr.common.Color;
 import eu.arrvi.cextr.common.ColorPatch;
 
 public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {

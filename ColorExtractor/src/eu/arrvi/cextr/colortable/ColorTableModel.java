@@ -1,6 +1,6 @@
 package eu.arrvi.cextr.colortable;
 
-import eu.arrvi.cextr.colortable.Color;
+import eu.arrvi.cextr.common.Color;
 import eu.arrvi.cextr.common.ColorPatch;
 
 import java.util.ArrayList;
@@ -14,7 +14,9 @@ public class ColorTableModel extends AbstractTableModel {
 		"#",
 		"RGB",
 		"HSV",
-		"HTML"
+		"HTML",
+		"Temp",
+		"score"
 	};
 	
 	// TODO clear testing data
@@ -55,8 +57,10 @@ public class ColorTableModel extends AbstractTableModel {
 			case 2: return color.toRGBString();
 			case 3: return color.toHSVString();
 			case 4: return color.toHTMLString();
+			case 5: return color.getTemperature();
+			case 6: return patch.getScore();
 				
-			default: return color;
+			default: return patch;
 		}
 	}
 

@@ -1,4 +1,4 @@
-package eu.arrvi.cextr.colortable;
+package eu.arrvi.cextr.common;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,10 +10,19 @@ public class Color extends java.awt.Color {
 	public final static int HSV_DISTANCE=2;
 	
 	private double h,s,v;
+	private int t=-1; // temperature
 	
 	public Color(int color) {
 		super(color);
-		
+		calculateHSV();
+	}
+	
+	public Color(int r, int g, int b) {
+		super(r,g,b);
+		calculateHSV();
+	}
+	
+	private void calculateHSV() {
 		float[] hsv = java.awt.Color.RGBtoHSB(
 				this.getRed(), 
 				this.getGreen(), 
@@ -24,10 +33,6 @@ public class Color extends java.awt.Color {
 		h = hsv[0];
 		s = hsv[1];
 		v = hsv[2];
-	}
-	
-	public Color(int r, int g, int b) {
-		super(r,g,b);
 	}
 	
 	public double getHue() {
@@ -64,6 +69,15 @@ public class Color extends java.awt.Color {
 		}
 	}
 	
+	public int getTemperature() {
+		if ( t==-1 ) {
+			double n = (0.23881*getRed()+0.25499*getGreen()-0.58291*getBlue())/
+					(0.11109*getRed()-0.85406*getGreen()+0.52289*getBlue());
+			t = (int) (449*n*n*n + 3525*n*n + 6823.3*n + 5520.33);
+		}
+		return t;
+	}
+	
 	public String toRGBString() {
 		return String.format(Locale.ENGLISH, "rgb(%d, %d, %d)", getRed(), getGreen(), getBlue());
 	}
@@ -79,7 +93,7 @@ public class Color extends java.awt.Color {
 	
 	public static Color avgColor(HashSet<Color> colors) {
 		long red=0, green=0, blue=0;
-		for (Iterator iterator = colors.iterator(); iterator.hasNext();) {
+		for (Iterator<Color> iterator = colors.iterator(); iterator.hasNext();) {
 			Color color = (Color) iterator.next();
 			red += color.getRed();
 			green += color.getGreen();
