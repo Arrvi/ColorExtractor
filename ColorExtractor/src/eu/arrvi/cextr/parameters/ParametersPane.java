@@ -59,10 +59,6 @@ public class ParametersPane extends JPanel {
 		slider = new JSlider(new BeanControlledModel("tolerance"));
 		analysis.add(slider);
 		
-		analysis.add(new JLabel("Blur radius"));
-		slider = new JSlider(new BeanControlledModel("blurRadius"));
-		analysis.add(slider);
-		
 		return analysis;
 	}
 	

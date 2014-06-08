@@ -11,8 +11,6 @@ import javax.swing.JSeparator;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import eu.arrvi.cextr.Controller;
-
 /**
  * Status bar for main window. Displays runtime messages and loaded image resolution.
  * 
@@ -20,7 +18,6 @@ import eu.arrvi.cextr.Controller;
  *
  */
 public class StatusBar extends JPanel implements ActionListener {
-	final private Controller controller;
 	final private JLabel status;
 	final private JLabel resolution;
 	private Dimension res;
@@ -31,9 +28,8 @@ public class StatusBar extends JPanel implements ActionListener {
 	/**
 	 * Creates status bar with 2 fields and upper separator (acting as top etched border).
 	 */
-	public StatusBar(Controller contr) {
+	public StatusBar() {
 		super();
-		controller = contr;
 		this.setLayout(new BorderLayout());
 		
 		status = new JLabel(" ");

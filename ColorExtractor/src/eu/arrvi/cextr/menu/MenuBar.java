@@ -28,7 +28,6 @@ public class MenuBar extends JMenuBar {
 		controller = contr;
 		
 		add(createFileMenu());
-		add(createEditMenu());
 		add(createHelpMenu());
 	}
 	
@@ -38,12 +37,8 @@ public class MenuBar extends JMenuBar {
 	 * <ul>
 	 * 	<li>Open
 	 * 	<li>Close
-	 * 	<li>Export
 	 * 	<li>Exit
 	 * </ul>
-	 * 
-	 * TODO menu items
-	 * TODO actions
 	 * 
 	 * @return ready to use "file menu"
 	 */
@@ -67,34 +62,11 @@ public class MenuBar extends JMenuBar {
 	}
 	
 	/**
-	 * Creates edit menu.<br>
-	 * Contents:
-	 * <ul>
-	 * 	<li>Undo
-	 * 	<li>Redo
-	 * 	<li>Preferences
-	 * </ul>
-	 * 
-	 * TODO menu items
-	 * TODO actions
-	 * 
-	 * @return ready to use "edit menu"
-	 */
-	private JMenu createEditMenu() {
-		JMenu menu = new JMenu("Edit");
-		
-		return menu;
-	}
-	
-	/**
 	 * Creates help menu.<br>
 	 * Contents:
 	 * <ul>
-	 * 	<li>Help (not sure)
 	 * 	<li>About
 	 * </ul>
-	 * 
-	 * TODO help
 	 * 
 	 * @return ready to use "help menu"
 	 */

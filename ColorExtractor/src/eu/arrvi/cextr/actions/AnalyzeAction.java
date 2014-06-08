@@ -1,7 +1,6 @@
 package eu.arrvi.cextr.actions;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -113,10 +110,8 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 				try {
 					analyzeImage(get());
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -146,7 +141,6 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 					} catch (InterruptedException e) {
 						controller.getImageBean().setStatus(ImageBean.LOADED);
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -175,7 +169,6 @@ public class AnalyzeAction extends AbstractAction implements PropertyChangeListe
 					} catch (InterruptedException e) {
 						controller.getImageBean().setStatus(ImageBean.LOADED);
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

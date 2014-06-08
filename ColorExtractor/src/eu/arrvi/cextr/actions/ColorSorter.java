@@ -1,6 +1,5 @@
 package eu.arrvi.cextr.actions;
 
-import java.awt.print.Paper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

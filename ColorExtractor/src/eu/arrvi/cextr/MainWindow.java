@@ -54,7 +54,7 @@ public final class MainWindow extends JFrame {
 		
 		this.add(mainPane, BorderLayout.CENTER);
 
-		status = new StatusBar(controller);
+		status = new StatusBar();
 		this.add(status, BorderLayout.SOUTH);
 		
 		this.pack();

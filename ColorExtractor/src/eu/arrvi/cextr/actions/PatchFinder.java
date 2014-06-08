@@ -1,10 +1,8 @@
 package eu.arrvi.cextr.actions;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
@@ -21,8 +19,6 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 	
 	private final static int EXCLUDE = Color.WHITE.getRGB();
 	private final static int INCLUDE = Color.BLACK.getRGB();
-	private final static int RED = Color.RED.getRGB();
-	private final static int GREEN = Color.GREEN.getRGB();
 	
 	public PatchFinder(BufferedImage image, double tolerance, int minSize) {
 		this.image = image;
@@ -118,11 +114,6 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 					patch.add(color);
 					goRight(patch, x, y);
 					goDown(patch, x, y);
-					
-//					image.setRGB(x, y, GREEN);
-				}
-				else {
-					image.setRGB(x, y, RED);
 				}
 			}
 			exclude(x, y);
@@ -137,11 +128,6 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 					patch.add(color);
 					goDown(patch, x, y);
 					goRight(patch, x, y);
-					
-//					image.setRGB(x, y, GREEN);
-				}
-				else {
-					image.setRGB(x, y, RED);
 				}
 			}
 			exclude(x, y);
@@ -155,11 +141,6 @@ public class PatchFinder extends SwingWorker<ArrayList<ColorPatch>, Double> {
 				if ( patch.getColor().distance(color, Color.RGB_DISTANCE) < tolerance ) {
 					patch.add(color);
 					goLeft(patch, x, y);
-					
-//					image.setRGB(x, y, GREEN);
-				}
-				else {
-					image.setRGB(x, y, RED);
 				}
 			}
 			exclude(x, y);

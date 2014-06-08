@@ -10,18 +10,13 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.Border;
-import javax.swing.border.MatteBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import eu.arrvi.cextr.Controller;
-import eu.arrvi.cextr.common.Color;
 import eu.arrvi.cextr.common.ColorPatch;
 
 /**
@@ -60,6 +55,7 @@ public class ColorTablePane extends JPanel {
 	
 	private class ColorBeanListener implements PropertyChangeListener {
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			model.setPatches((ArrayList<ColorPatch>)evt.getNewValue());
@@ -76,22 +72,6 @@ public class ColorTablePane extends JPanel {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-
-//			JLabel label = new JLabel();
-//			label.setOpaque(true);
-//			label.setPreferredSize(new Dimension(8, 8));
-//			removeAll();
-//			add(label);
-//			
-//			Color newColor = (Color)value;
-//	        label.setBackground(newColor);
-//		        
-//            if (isSelected) {
-//                setBackground(table.getSelectionBackground());
-//            } else {
-//                setBackground(table.getBackground());
-//            }
-			
 			ColorPatch patch = (ColorPatch)value;
 			
 			setBackground(patch.getColor());

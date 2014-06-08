@@ -4,7 +4,6 @@ import eu.arrvi.cextr.common.Color;
 import eu.arrvi.cextr.common.ColorPatch;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -15,8 +14,7 @@ public class ColorTableModel extends AbstractTableModel {
 		"RGB",
 		"HSV",
 		"HTML",
-		"Temp",
-		"score"
+		"Temp"
 	};
 	
 	// TODO clear testing data
